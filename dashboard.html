@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank SOC - Live Risk Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            SOC Operations
+        </div>
+        <nav>
+            <a href="#" class="active" id="nav-live">Live Feed</a>
+            <a href="#" id="nav-history">Historical Data</a>
+            <a href="graph.html" target="_blank">Fraud Ring Graph (MVP)</a>
+            <a href="index.html" target="_blank">Open App Simulator</a>
+        </nav>
+        <div class="system-status">
+            <div class="status-indicator"></div>
+            Edge Inference Engine: ONLINE
+        </div>
+    </div>
+
+    <main class="dashboard">
+        <header>
+            <h1>Real-Time Fraud Monitoring (Pre-Settlement)</h1>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <h3>Transactions Analyzed</h3>
+                    <div class="value" id="total-tx">0</div>
+                </div>
+                <div class="stat-card warning">
+                    <h3>Panic Interventions</h3>
+                    <div class="value" id="total-panic">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg Inference latency</h3>
+                    <div class="value highlight">12.4ms</div>
+                </div>
+            </div>
+        </header>
+
+        <section class="live-feed">
+            <h2>Live Transaction Feed <span class="blink">● REC</span></h2>
+            <div class="table-container">
+                <table id="tx-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Amount</th>
+                            <th>Interaction Speed</th>
+                            <th>Risk Score</th>
+                            <th>Status (Pre-Settlement)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tx-body">
+                       
+                        <tr class="empty-state">
+                            <td colspan="5">Awaiting transactions from Edge devices...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

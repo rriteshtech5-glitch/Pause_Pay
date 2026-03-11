@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Ring Graph Visualization</title>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style type="text/css">
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 40px;
+            margin: 0;
+        }
+
+        #mynetwork {
+            width: 100%;
+            height: 60vh;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #3b82f6;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Post-Transaction Fraud Ring Visualization</h1>
+        <p>Roadmap Concept (Component A of PSFT-01). Flagged "Panic" transactions are fed into this network. Accounts
+            with high in-degree from flagged senders are immediately marked as Suspicious Mules.</p>
+    </div>
+
+    <div id="mynetwork"></div>
+
+    <script type="text/javascript">
+        // Create nodes
+        var nodes = new vis.DataSet([
+            { id: 1, label: "Scammer Mule 1", color: "#ef4444", shape: "star", size: 30, font: { color: 'white' } },
+            { id: 2, label: "Scammer Mule 2", color: "#ef4444", shape: "star", size: 30, font: { color: 'white' } },
+            { id: 3, label: "Victim A (Panic 92%)", color: "#3b82f6", font: { color: 'white' } },
+            { id: 4, label: "Victim B (Panic 85%)", color: "#3b82f6", font: { color: 'white' } },
+            { id: 5, label: "Victim C (Panic 88%)", color: "#3b82f6", font: { color: 'white' } },
+            { id: 6, label: "Normal User (Clean)", color: "#10b981", font: { color: 'white' } },
+            { id: 7, label: "Victim D (Panic 95%)", color: "#3b82f6", font: { color: 'white' } }
+        ]);
+
+        // Create edges
+        var edges = new vis.DataSet([
+            { from: 3, to: 1, label: "₹5000 (Flagged)", font: { color: '#ef4444' }, color: { color: '#ef4444' } },
+            { from: 4, to: 1, label: "₹8000 (Flagged)", font: { color: '#ef4444' }, color: { color: '#ef4444' } },
+            { from: 5, to: 2, label: "₹12000 (Flagged)", font: { color: '#ef4444' }, color: { color: '#ef4444' } },
+            { from: 7, to: 2, label: "₹4500 (Flagged)", font: { color: '#ef4444' }, color: { color: '#ef4444' } },
+            { from: 6, to: 2, label: "₹500 (Clean)", font: { color: '#10b981' }, color: { color: '#10b981' } }
+        ]);
+
+        // Provide data and options
+        var container = document.getElementById("mynetwork");
+        var data = { nodes: nodes, edges: edges };
+        var options = {
+            physics: {
+                repulsion: {
+                    centralGravity: 0.2,
+                    springLength: 200,
+                    springConstant: 0.05,
+                    nodeDistance: 150,
+                    damping: 0.09
+                },
+                solver: 'repulsion'
+            },
+            edges: {
+                arrows: 'to',
+                width: 2
+            }
+        };
+
+        // Initialize network
+        var network = new vis.Network(container, data, options);
+    </script>
+
+</body>
+
+</html>
